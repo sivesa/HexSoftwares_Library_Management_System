@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define the project directory (change this to your project's path)
-PROJECT_DIR="/home/ghost/solutions/HexSoftwares_Library_Management_System"
+PROJECT_DIR="/path/to/your/project"
 
 # Change to the project directory
 cd "$PROJECT_DIR" || { echo "Project directory not found!"; exit 1; }
