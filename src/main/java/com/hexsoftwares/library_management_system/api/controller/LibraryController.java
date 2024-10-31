@@ -4,8 +4,14 @@ import com.hexsoftwares.library_management_system.api.model.Book;
 import com.hexsoftwares.library_management_system.api.model.Member;
 import com.hexsoftwares.library_management_system.api.service.BookService;
 import com.hexsoftwares.library_management_system.api.service.MemberService;
+import com.hexsoftwares.library_management_system.api.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
+
+import org.springframework.stereotype.Controller;
+
 
 import java.util.List;
 
@@ -20,19 +26,38 @@ public class LibraryController {
 
     @Autowired
     private BookService bookService;
+    
+    @GetMapping("/register")
+    public String showRegisterPage() {
+    	return "register";
+    }
 
     @PostMapping("/register")
-    public Member register(@RequestParam String firstName, @RequestParam String lastName,
-                           @RequestParam String email, @RequestParam String password) {
+    public Member register(
+    	@RequestParam String firstName, 
+    	@RequestParam String lastName,
+    	@RequestParam String email, 
+    	@RequestParam String password) {
         return memberService.registerMember(firstName, lastName, email, password);
+    }
+    
+    @GetMapping("/")
+    public String showLoginPage() {
+    	return "index";
     }
 
     @PostMapping("/login")
-    public String login(@RequestParam String membershipNumber, @RequestParam String password) {
-        if (memberService.loginMember(membershipNumber, password)) {
-            return "Login successful!";
-        }
-        return "Invalid membership number or password.";
+	public ResponseEntity<String> login(@RequestParam String membershipNumber, @RequestParam String password) {
+		if (memberService.loginMember(membershipNumber, password)) {
+		    return ResponseEntity.ok("Login successful!");
+		} else {
+		    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid membership number or password.");
+		}
+	}
+    
+    @GetMapping("/landing")
+    public String showLandingPage() {
+    	return "landing";
     }
 
     @PostMapping("/addBook")

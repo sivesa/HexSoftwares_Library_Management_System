@@ -23,13 +23,14 @@ public class MemberService {
         member.setEmail(email);
         member.setPassword(passwordEncoder.encode(password));
         member.setMembershipNumber(membershipNumber);
+        member.setStaff(false);
         return memberRepository.save(member);
     }
 
     public boolean loginMember(String membershipNumber, String password) {
         Member member = memberRepository.findByMembershipNumber(membershipNumber);
         if (member != null) {
-            return passwordEncoder.matches(password, member.getPassword());
+            return passwordEncoder.matches(password, member.getPassword()); // Returns a boolean
         }
         return false;
     }

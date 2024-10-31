@@ -24,6 +24,9 @@ public class Member {
 
     @Column(nullable = false, unique = true, length = 5)
     private String membershipNumber;
+    
+    @Column(nullable = false)
+    private boolean staff; // is member staff
 
     // Getters and Setters
     public Long getId() {
@@ -72,6 +75,14 @@ public class Member {
 
     public void setMembershipNumber(String membershipNumber) {
         this.membershipNumber = membershipNumber;
+    }
+    
+    public boolean isStaff() {
+    	return staff;
+    }
+    
+    public void setStaff(boolean staff) {
+    	this.staff = staff;
     }
 
     // Override equals() and hashCode() based on membershipNumber

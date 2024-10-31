@@ -1,9 +1,11 @@
-package com.hexsoftwares.library_management_system.terminal_api;
+package com.hexsoftwares.library_management_system.api;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import com.hexsoftwares.library_management_system.api.model.Book;
 
 
 public class BookTest {
@@ -11,6 +13,6 @@ public class BookTest {
 	
 	@Before 
 	public void setUp() {
-		classUnderTest = new Book("To Kill a Mockingbird", "Harper Lee", "978-0061120084");
+		classUnderTest = new Book();
 	}
 }

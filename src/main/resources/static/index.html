@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+    <h2>Login</h2>
+    <form id="loginForm">
+        <label for="membershipNumber">Email:</label>
+        <input type="text" id="membershipNumber" name="membershipNumber" required><br><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br><br>
+
+        <button type="button" onclick="loginUser()">Login</button>
+    </form>
+    <div class="">
+    	<a href="/register.html">Register here</a>
+    </div>
+
+    <script>
+        async function loginUser() {
+            const formData = new FormData(document.getElementById('loginForm'));
+
+            const data = new URLSearchParams();
+            data.append('membershipNumber', formData.get('membershipNumber'));
+            data.append('password', formData.get('password'));
+
+            try {
+                const response = await fetch('/library/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: data
+                });
+
+                if (response.ok) {
+                    // Redirect to the dashboard
+                    window.location.href = '/landing.html';
+                } else {
+                    alert('Login failed. Please check your credentials.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again later.');
+            }
+        }
+    </script>
+</body>
+</html>
+
