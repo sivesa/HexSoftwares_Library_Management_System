@@ -1,13 +1,225 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Page</title>
-</head>
-<body>
-    <h2>TODO Staff Landing Page</h2>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            display: flex;
+            height: 100vh;
+        }
 
+        .sidebar {
+            background: #343a40;
+            color: white;
+            min-width: 250px;
+            transition: width 0.3s;
+        }
+
+        .sidebar a {
+            color: white;
+        }
+
+        .sidebar a:hover {
+            background: #495057;
+            color: white;
+        }
+
+        .main-content {
+            flex-grow: 1;
+            padding: 20px;
+        }
+
+        .navbar-brand img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+        }
+
+        .card {
+            margin-bottom: 20px;
+        }
+
+        .user-form {
+            display: none; /* Initially hide user form */
+        }
+
+        #sidebarToggle {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar p-3" id="sidebar">
+        <h4>Dashboard</h4>
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link active" href="#" id="dashboard-link">Dashboard</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" id="users-link">Users</a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <button class="navbar-toggler" type="button" id="sidebarToggle" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle sidebar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand" href="#">
+                <img src="https://via.placeholder.com/30" alt="Profile Picture"> 
+                John Doe
+            </a>
+        </nav>
+
+        <!-- Dashboard Content -->
+        <div id="dashboard" class="content">
+            <h2>Dashboard</h2>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card text-white bg-primary">
+                        <div class="card-body">
+                            <h5 class="card-title">Members</h5>
+                            <p class="card-text">100</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card text-white bg-success">
+                        <div class="card-body">
+                            <h5 class="card-title">Books Available</h5>
+                            <p class="card-text">200</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card text-white bg-warning">
+                        <div class="card-body">
+                            <h5 class="card-title">Books Issued</h5>
+                            <p class="card-text">50</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card text-white bg-info">
+                        <div class="card-body">
+                            <h5 class="card-title">All Books</h5>
+                            <p class="card-text">250</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Users Section -->
+        <div id="users" class="content" style="display:none;">
+            <h2>Users</h2>
+            <button class="btn btn-primary" onclick="toggleUserForm()">Add User</button>
+            <div class="user-form" id="user-form">
+                <h3 id="form-title">Add User</h3>
+                <form id="userForm">
+                    <div class="form-group">
+                        <label for="firstName">First Name:</label>
+                        <input type="text" class="form-control" id="firstName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name:</label>
+                        <input type="text" class="form-control" id="lastName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" class="form-control" id="email" required>
+                    </div>
+                    <button type="submit" class="btn btn-success">Save User</button>
+                    <button type="button" class="btn btn-danger" onclick="toggleUserForm()">Cancel</button>
+                </form>
+            </div>
+
+            <h4>Member Users List</h4>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>John</td>
+                        <td>Doe</td>
+                        <td>john.doe@example.com</td>
+                        <td>
+                            <button class="btn btn-warning" onclick="editUser('John', 'Doe', 'john.doe@example.com')">Edit</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Jane</td>
+                        <td>Smith</td>
+                        <td>jane.smith@example.com</td>
+                        <td>
+                            <button class="btn btn-warning" onclick="editUser('Jane', 'Smith', 'jane.smith@example.com')">Edit</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Toggle User Form Visibility
+        function toggleUserForm() {
+            const userForm = document.getElementById('user-form');
+            userForm.style.display = userForm.style.display === 'none' ? 'block' : 'none';
+            document.getElementById('userForm').reset();
+            document.getElementById('form-title').innerText = 'Add User';
+        }
+
+        // Edit User Functionality
+        function editUser(firstName, lastName, email) {
+            document.getElementById('firstName').value = firstName;
+            document.getElementById('lastName').value = lastName;
+            document.getElementById('email').value = email;
+            document.getElementById('user-form').style.display = 'block';
+            document.getElementById('form-title').innerText = 'Edit User';
+        }
+
+        // Switch between dashboard and users
+        document.getElementById('dashboard-link').addEventListener('click', function () {
+            document.getElementById('dashboard').style.display = 'block';
+            document.getElementById('users').style.display = 'none';
+        });
+
+        document.getElementById('users-link').addEventListener('click', function () {
+            document.getElementById('users').style.display = 'block';
+            document.getElementById('dashboard').style.display = 'none';
+        });
+
+        // Toggle Sidebar
+        document.getElementById('sidebarToggle').addEventListener('click', function () {
+            const sidebar = document.getElementById('sidebar');
+            if (sidebar.style.display === 'none' || sidebar.style.display === '') {
+                sidebar.style.display = 'block';
+            } else {
+                sidebar.style.display = 'none';
+            }
+        });
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
 </html>
 
