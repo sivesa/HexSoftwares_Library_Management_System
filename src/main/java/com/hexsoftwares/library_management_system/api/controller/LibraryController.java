@@ -5,6 +5,7 @@ import com.hexsoftwares.library_management_system.api.model.Member;
 import com.hexsoftwares.library_management_system.api.service.BookService;
 import com.hexsoftwares.library_management_system.api.service.MemberService;
 import com.hexsoftwares.library_management_system.api.repository.MemberRepository;
+import com.hexsoftwares.library_management_system.api.service.LoginResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Controller;
 
 
 import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/library")
@@ -47,12 +50,23 @@ public class LibraryController {
     }
 
     @PostMapping("/login")
-	public ResponseEntity<String> login(@RequestParam String membershipNumber, @RequestParam String password) {
-		if (memberService.loginMember(membershipNumber, password)) {
-		    return ResponseEntity.ok("Login successful!");
+	public ResponseEntity<Map<String, Object>> login(@RequestParam String membershipNumber, @RequestParam String password) {
+		LoginResponse loginResponse = memberService.loginMember(membershipNumber, password);
+		
+		if (loginResponse.isSuccess()) {
+		    Map<String, Object> response = new HashMap<>();
+		    response.put("success", true);
+		    response.put("role", loginResponse.getRole());
+		    return ResponseEntity.ok(response);
 		} else {
-		    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid membership number or password.");
+		    return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+		        .body(Map.of("success", false, "message", "Invalid membership number or password."));
 		}
+//		if (memberService.loginMember(membershipNumber, password)) {
+//		    return ResponseEntity.ok("Login successful!");
+//		} else {
+//		    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid membership number or password.");
+//		}
 	}
     
     @GetMapping("/landing")

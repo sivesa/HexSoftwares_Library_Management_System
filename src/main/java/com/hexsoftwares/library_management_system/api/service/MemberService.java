@@ -27,9 +27,27 @@ public class MemberService {
         return memberRepository.save(member);
     }
 
-    public boolean loginMember(String membershipNumber, String password) {
+//    public boolean loginMember(String membershipNumber, String password) {
+//        Member member = memberRepository.findByMembershipNumber(membershipNumber);
+//        if (member != null && passwordEncoder.matches(password, member.getPassword()) {
+//        	
+//            return true; // Returns a boolean
+//        }
+//        return false;
+//    }
+    
+    public LoginResponse loginMember(String membershipNumber, String password) {
+		Member member = memberRepository.findByMembershipNumber(membershipNumber);
+		if (member != null && passwordEncoder.matches(password, member.getPassword())) {
+		    String role = member.isStaff() ? "STAFF" : "MEMBER"; // Check the user's role
+		    return new LoginResponse(true, role);
+		}
+		return new LoginResponse(false, null);
+	}
+    
+    public boolean loginStaff(String membershipNumber, String password) {
         Member member = memberRepository.findByMembershipNumber(membershipNumber);
-        if (member != null) {
+        if (member != null && member.isStaff()) {
             return passwordEncoder.matches(password, member.getPassword()); // Returns a boolean
         }
         return false;
