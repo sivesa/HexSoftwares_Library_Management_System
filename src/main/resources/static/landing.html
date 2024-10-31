@@ -1,13 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Landing Page</title>
-</head>
-<body>
-    <h2>TODO User Landing Page</h2>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            display: flex;
+            height: 100vh;
+        }
 
+        .sidebar {
+            width: 250px;
+            background-color: #f8f9fa;
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto; /* Allows scrolling if the sidebar content is too long */
+        }
+
+        .sidebar a {
+            text-decoration: none;
+            color: #333;
+            padding: 10px 15px;
+            display: block;
+        }
+
+        .sidebar a:hover {
+            background-color: #ddd;
+        }
+
+        .content {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .navbar {
+            margin-bottom: 20px;
+        }
+
+        .tile {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            margin: 10px 0;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .book-list {
+            margin-top: 20px;
+        }
+
+        .book-item {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <h4>Dashboard</h4>
+        <a href="#" id="showBooksBtn">Books</a>
+    </div>
+
+    <div class="content">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Library</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <span class="nav-link" id="username">Welcome, User</span> <!-- Logged-in username -->
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="main-content">
+            <h2>Dashboard</h2>
+            <div class="tile">
+                <h5>Available Books: <span id="availableBooks">120</span></h5>
+            </div>
+            <div class="tile">
+                <h5>Books Issued: <span id="issuedBooks">3</span></h5>
+            </div>
+
+            <div class="book-list" id="booksList" style="display: none;">
+                <h2>Available Books</h2>
+                <div class="book-item">
+                    <h5>Book Title 1</h5>
+                    <p>Author: Author Name 1</p>
+                    <button class="btn btn-primary">Borrow Book</button>
+                </div>
+                <div class="book-item">
+                    <h5>Book Title 2</h5>
+                    <p>Author: Author Name 2</p>
+                    <button class="btn btn-primary">Borrow Book</button>
+                </div>
+                <div class="book-item">
+                    <h5>Book Title 3</h5>
+                    <p>Author: Author Name 3</p>
+                    <button class="btn btn-primary">Borrow Book</button>
+                </div>
+                <!-- Add more book items as needed -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simulate fetching the logged-in username
+        const loggedInUsername = "John Doe"; // Replace with actual logic to get the username
+        document.getElementById("username").innerText = `Welcome, ${loggedInUsername}`;
+
+        // Show the book list when the "Books" link is clicked
+        document.getElementById("showBooksBtn").onclick = function () {
+            document.getElementById("booksList").style.display = "block";
+        };
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
 </html>
 
