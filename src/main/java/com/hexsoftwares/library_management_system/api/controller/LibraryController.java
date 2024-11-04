@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 
-import org.springframework.stereotype.Controller;
+// import org.springframework.stereotype.Controller;
 
 
 import java.util.List;
@@ -62,11 +62,6 @@ public class LibraryController {
 		    return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
 		        .body(Map.of("success", false, "message", "Invalid membership number or password."));
 		}
-//		if (memberService.loginMember(membershipNumber, password)) {
-//		    return ResponseEntity.ok("Login successful!");
-//		} else {
-//		    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid membership number or password.");
-//		}
 	}
     
     @GetMapping("/landing")
@@ -98,6 +93,11 @@ public class LibraryController {
     @GetMapping("/books")
     public List<Book> getAllBooks() {
         return bookService.getAllBooks();
+    }
+    
+    @GetMapping("/members")
+    public List<Member> getAllMembers() {
+    	return memberService.getAllMembers();
     }
 }
 

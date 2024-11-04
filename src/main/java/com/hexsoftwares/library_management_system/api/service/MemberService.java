@@ -6,7 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import java.util.UUID;
+// import java.util.UUID;
+import java.util.List;
 
 @Service
 public class MemberService {
@@ -26,15 +27,6 @@ public class MemberService {
         member.setStaff(false);
         return memberRepository.save(member);
     }
-
-//    public boolean loginMember(String membershipNumber, String password) {
-//        Member member = memberRepository.findByMembershipNumber(membershipNumber);
-//        if (member != null && passwordEncoder.matches(password, member.getPassword()) {
-//        	
-//            return true; // Returns a boolean
-//        }
-//        return false;
-//    }
     
     public LoginResponse loginMember(String membershipNumber, String password) {
 		Member member = memberRepository.findByMembershipNumber(membershipNumber);
@@ -55,6 +47,10 @@ public class MemberService {
 
     private String generateMembershipNumber() {
         return String.format("%05d", (int) (Math.random() * 100000));
+    }
+    
+    public List<Member> getAllMembers() {
+    	return memberRepository.findAll();
     }
 }
 
